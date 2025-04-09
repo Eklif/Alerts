@@ -1,17 +1,16 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_from_directory
 from flask_socketio import SocketIO
 from gtts import gTTS
 import os
 import time
 
 app = Flask(__name__)
-socketio = SocketIO(app)
+socketio = SocketIO(app, cors_allowed_origins="*")  # Разрешить все origins для WebSocket
 
-# Папка для аудио
+# Папка для аудио (временная, на Railway файлы не сохраняются после перезапуска)
 AUDIO_DIR = "alert_audio"
 os.makedirs(AUDIO_DIR, exist_ok=True)
 
-# Очередь сообщений
 messages = []
 
 @app.route('/alert_audio/<filename>')
@@ -20,7 +19,7 @@ def serve_audio(filename):
 
 @app.route('/')
 def home():
-    return render_template('alert_page.html')  # Страница для OBS
+    return render_template('alert_page.html')
 
 @app.route('/send_alert', methods=['POST'])
 def handle_alert():
@@ -30,19 +29,18 @@ def handle_alert():
     if not text:
         return "Нет текста", 400
 
-    # Сохраняем сообщение
     message = f"{username}: {text}"
     messages.append(message)
 
-    # Генерируем аудио (TTS)
+    # Генерируем аудио
     tts = gTTS(text=message, lang='ru')
     audio_path = os.path.join(AUDIO_DIR, f"alert_{int(time.time())}.mp3")
     tts.save(audio_path)
 
-    # Отправляем в OBS через WebSocket
+    # Отправляем через WebSocket
     socketio.emit('new_alert', {
         'text': message,
-        'audio_path': audio_path
+        'audio_path': f"/alert_audio/{os.path.basename(audio_path)}"  # Правильный путь для клиента
     })
 
     return "Сообщение отправлено!"
@@ -52,4 +50,5 @@ def send_page():
     return render_template('send_alert.html')
 
 if __name__ == '__main__':
-    socketio.run(app, port=5001, host='0.0.0.0', debug=True, allow_unsafe_werkzeug=True, use_reloader=False)
+    port = int(os.environ.get("PORT", 5001))  # Важно для Railway!
+    socketio.run(app, host='0.0.0.0', port=port, debug=False)  # debug=False для продакшена
