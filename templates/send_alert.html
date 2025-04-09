@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Отправить сообщение на стрим</title>
+</head>
+<body>
+    <h1>Напиши что-нибудь, и это появится на стриме!</h1>
+    <form action="/send_alert" method="POST">
+        <input type="text" name="username" placeholder="Твое имя" required>
+        <br>
+        <textarea name="text" placeholder="Текст сообщения..." required></textarea>
+        <br>
+        <button type="submit">Отправить</button>
+    </form>
+</body>
+</html>

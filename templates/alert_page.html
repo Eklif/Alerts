@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель</title>
+</head>
+<body>
+    <h1>Админ-панель</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Донат-алерты (бесплатно)</title>
+    <style>
+        .alert {
+            font-size: 24px;
+            color: white;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            animation: fadeInOut 5s;
+        }
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div id="alerts"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const alertsDiv = document.getElementById('alerts');
+
+        socket.on('new_alert', (data) => {
+            const alertElement = document.createElement('div');
+            alertElement.className = 'alert';
+            alertElement.textContent = data.text;
+            alertsDiv.appendChild(alertElement);
+
+            // Автовоспроизведение аудио (если нужно)
+            const audio = new Audio(data.audio_path);
+            audio.play();
+
+            // Удаляем уведомление через 5 сек
+            setTimeout(() => {
+                alertElement.remove();
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
