@@ -1,2 +1,4 @@
-gunicorn==20.1.0
 flask==2.0.1
+flask-socketio==5.3.6
+gtts==2.4.0
+python-dotenv==1.0.0
