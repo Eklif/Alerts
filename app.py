@@ -9,7 +9,7 @@ import time
 
 
 app = Flask(__name__)
-socketio = SocketIO(app, cors_allowed_origins="*", async_mode='gevent')
+socketio = SocketIO(app, async_mode='gevent', cors_allowed_origins="*")
 
 # Папка для аудио (временная, на Railway файлы не сохраняются после перезапуска)
 AUDIO_DIR = "alert_audio"
