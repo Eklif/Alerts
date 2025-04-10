@@ -9,6 +9,7 @@ import time
 
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET', 'secret!')
 socketio = SocketIO(app, async_mode='gevent', cors_allowed_origins="*")
 
 # Папка для аудио (временная, на Railway файлы не сохраняются после перезапуска)
