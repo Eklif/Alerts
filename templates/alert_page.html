@@ -34,7 +34,10 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <script>
-        const socket = io();
+        const socket = io("https://alerts-production-e961.up.railway.app", {
+  transports: ['websocket'],  // Принудительно используем WebSocket
+  upgrade: false
+});
         const alertsDiv = document.getElementById('alerts');
 
         socket.on('new_alert', (data) => {
