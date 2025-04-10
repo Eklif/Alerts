@@ -52,7 +52,7 @@ def handle_alert():
 @app.route('/send', methods=['GET'])
 def send_page():
     return render_template('send_alert.html')
-
+    
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5001))  # Используйте порт из переменной Railway
-    socketio.run(app, host='0.0.0.0', port=port)
+    port = int(os.environ.get("PORT", 5001))
+    socketio.run(app, host='0.0.0.0', port=port, debug=False)
