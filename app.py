@@ -1,5 +1,9 @@
+# Должно быть абсолютно первыми строками!
 from gevent import monkey
-monkey.patch_all() 
+monkey.patch_all()
+
+import werkzeug
+werkzeug.cached_property = werkzeug.utils.cached_property
 
 from flask import Flask, render_template, request, send_from_directory
 from flask_socketio import SocketIO
