@@ -50,5 +50,5 @@ def send_page():
     return render_template('send_alert.html')
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5001))  # Важно для Railway!
-    socketio.run(app, host='0.0.0.0', port=port, debug=False)  # debug=False для продакшена
+    port = int(os.environ.get("PORT", 5001))
+    socketio.run(app, host="0.0.0.0", port=port, debug=False)
