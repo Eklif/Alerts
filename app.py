@@ -5,7 +5,7 @@ import os
 import time
 
 app = Flask(__name__)
-socketio = SocketIO(app, cors_allowed_origins="*")  # Разрешить все origins для WebSocket
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode='gevent')
 
 # Папка для аудио (временная, на Railway файлы не сохраняются после перезапуска)
 AUDIO_DIR = "alert_audio"
