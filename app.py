@@ -14,7 +14,16 @@ import time
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET', 'secret!')
-socketio = SocketIO(app, async_mode='gevent', cors_allowed_origins="*")
+socketio = SocketIO(app,
+    async_mode='gevent',
+    cors_allowed_origins="*",  # Разрешить все домены
+    engineio_logger=True,      # Логирование для диагностики
+    logger=True               
+)
+
+@socketio.on('connect')
+def handle_connect():
+    print('Client connected')
 
 # Папка для аудио (временная, на Railway файлы не сохраняются после перезапуска)
 AUDIO_DIR = "alert_audio"
