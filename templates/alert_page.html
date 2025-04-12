@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Админ-панель</title>
+</head>
+<body>
+    <h1>Админ-панель</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Донат-алерты (бесплатно)</title>
     <style>
         .alert {
             font-size: 27px;
@@ -13,7 +20,6 @@
             margin: 10px;
             border-radius: 5px;
             animation: fadeInOut 5s;
-            position: relative;
         }
         @keyframes fadeInOut {
             0% { opacity: 0; }
@@ -21,78 +27,34 @@
             90% { opacity: 1; }
             100% { opacity: 0; }
         }
-        .stop-audio {
-            position: absolute;
-            right: 10px;
-            top: 10px;
-            background: #fff;
-            border: none;
-            border-radius: 3px;
-            padding: 2px 5px;
-            cursor: pointer;
-            font-size: 14px;
-        }
     </style>
 </head>
 <body>
-    <h1>Админ-панель</h1>
     <div id="alerts"></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <script>
         const socket = io("https://alerts-production-e961.up.railway.app", {
-            transports: ['websocket'],
-            upgrade: false
-        });
+  transports: ['websocket'],  // Принудительно используем WebSocket
+  upgrade: false
+});
         const alertsDiv = document.getElementById('alerts');
-        
-        // Хранилище для аудио объектов
-        const activeAudios = new Map();
 
         socket.on('new_alert', (data) => {
             const alertElement = document.createElement('div');
             alertElement.className = 'alert';
-            
-            // Создаем уникальный ID для этого алерта
-            const alertId = 'alert-' + Date.now();
-            alertElement.id = alertId;
-            
-            // Добавляем текст алерта
-            const textSpan = document.createElement('span');
-            textSpan.textContent = data.text;
-            alertElement.appendChild(textSpan);
-            
-            // Добавляем кнопку остановки
-            const stopButton = document.createElement('button');
-            stopButton.className = 'stop-audio';
-            stopButton.textContent = '×';
-            stopButton.onclick = () => {
-                const audio = activeAudios.get(alertId);
-                if (audio) {
-                    audio.pause();
-                    activeAudios.delete(alertId);
-                }
-                alertElement.remove();
-            };
-            alertElement.appendChild(stopButton);
-            
+            alertElement.textContent = data.text;
             alertsDiv.appendChild(alertElement);
 
-            // Создаем и воспроизводим аудио
+            // Автовоспроизведение аудио (если нужно)
             const audio = new Audio(data.audio_path);
-            activeAudios.set(alertId, audio);
             audio.play();
 
             // Удаляем уведомление через 5 сек
             setTimeout(() => {
-                const audio = activeAudios.get(alertId);
-                if (audio) {
-                    audio.pause();
-                    activeAudios.delete(alertId);
-                }
                 alertElement.remove();
             }, 5000);
         });
     </script>
 </body>
-</html>
+</html> как сделать чтобы аудио можно было остановить
