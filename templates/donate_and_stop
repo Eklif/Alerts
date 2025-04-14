@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Донат-алерты с экстренной остановкой</title>
+    <title>Донат-алерты с невидимой остановкой</title>
     <style>
         body {
             background-color: transparent !important;
@@ -21,20 +21,6 @@
             position: relative;
             text-shadow: 2px 2px 4px #000;
         }
-        
-        #emergency-stop {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #FF0000;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-            z-index: 1000;
-        }
 
         @keyframes fadeInOut {
             0% { opacity: 0; }
@@ -46,7 +32,6 @@
 </head>
 <body>
     <div id="alerts"></div>
-    <button id="emergency-stop" onclick="stopAllAudio()">STOP ALL AUDIO</button>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <script>
@@ -60,18 +45,13 @@
 
         // Функция экстренной остановки
         function stopAllAudio() {
-            // Останавливаем все аудио
             activeAudios.forEach(audio => {
                 audio.pause();
                 audio.currentTime = 0;
             });
             activeAudios.clear();
-            
-            // Удаляем все алерты
             alertsDiv.innerHTML = '';
-            
-            // Опционально: подтверждение
-            console.log("Все аудио остановлены вручную");
+            console.log("Аудио остановлены по горячей клавише");
         }
 
         // Оригинальный обработчик алертов
@@ -90,6 +70,14 @@
                 alertElement.remove();
                 activeAudios.delete(alertId);
             }, 5000);
+        });
+
+        // Глобальный обработчик клавиш
+        document.addEventListener('keydown', (e) => {
+            // Комбинация: Ctrl+Alt+Shift+S
+            if (e.ctrlKey && e.altKey && e.shiftKey && e.key === 'S') {
+                stopAllAudio();
+            }
         });
     </script>
 </body>
