@@ -74,8 +74,8 @@
 
         // Глобальный обработчик клавиш
         document.addEventListener('keydown', (e) => {
-            // Комбинация: Ctrl+Alt+Shift+S
-            if (e.ctrlKey && e.altKey && e.shiftKey && e.key === 'S') {
+            // Комбинация: Ctrl+S
+            if (e.ctrlKey && e.key === 'S') {
                 stopAllAudio();
             }
         });
