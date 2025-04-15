@@ -40,17 +40,33 @@
   upgrade: false
 });
         const alertsDiv = document.getElementById('alerts');
+        //Путь к изображению 
+        const DEFAULT_IMAGE_URL="https://raw.githubusercontent.com/Eklif/Alerts/main/fulfrina.jpeg";
 
         socket.on('new_alert', (data) => {
             const alertElement = document.createElement('div');
             alertElement.className = 'alert';
-            alertElement.textContent = data.text;
+            
+            //Создаем элемент изображения
+            const imgElement=document.createElement('img');
+            imgElement.className="alert-image";
+            imgElement.src=data.image_url || DEFAULT_IMAGE_URL;
+            imgElement.alt="Alert image";
+
+            // Создаем элемент текста
+            const textElement = document.createElement('div');
+            textElement.textContent= data.text;
+
+            //Добавляем изображение и текст
+            alertElement.appendChild(imgElement);
+            alertElement.appendChild(textElement);
             alertsDiv.appendChild(alertElement);
 
             // Автовоспроизведение аудио (если нужно)
-            const audio = new Audio(data.audio_path);
-            audio.play();
-
+            if (data.audio_path){
+                const audio = new Audio(data.audio_path);
+                audio.play();
+            }
             // Удаляем уведомление через 5 сек
             setTimeout(() => {
                 alertElement.remove();
