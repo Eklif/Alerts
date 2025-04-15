@@ -37,7 +37,7 @@ def serve_audio(filename):
 
 @app.route('/')
 def home():
-    return render_template('alert_page.html')
+    return render_template('alert_page1.html')
 
 @app.route('/send_alert', methods=['POST'])
 def handle_alert():
