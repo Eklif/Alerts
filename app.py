@@ -27,7 +27,7 @@ def handle_connect():
     print('Client connected')
     
 #словарь для хранения времени последнго сообщения  
-ip_cooldown=defaultdick(float)
+ip_cooldown = defaultdict(float)
 
 # Папка для аудио (временная, на Railway файлы не сохраняются после перезапуска)
 AUDIO_DIR = "alert_audio"
