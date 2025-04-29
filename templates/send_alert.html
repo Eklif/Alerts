@@ -13,36 +13,6 @@
         <button type="submit" id="submitBtn">Отправить</button>
     </form>
     <p>Сообщения можно отправить раз в 10 секунд!</p>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('messageForm');
-            const submitBtn = document.getElementById('submitBtn');
-            
-            form.addEventListener('submit', function(e) {
-                // Блокируем кнопку
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Отправка...';
-                
-                // Очищаем форму после небольшой задержки
-                setTimeout(() => {
-                    form.reset();
-                    
-                    // Убираем POST из истории браузера
-                    if (window.history.replaceState) {
-                        window.history.replaceState(null, null, window.location.href);
-                    }
-                    
-                    // Разблокируем через 10 секунд
-                    setTimeout(() => {
-                        submitBtn.disabled = false;
-                        submitBtn.textContent = 'Отправить';
-                    }, 10000);
-                }, 100);
-            });
-        });
-    </script>
-
     <style>
         body {
             display: grid;
