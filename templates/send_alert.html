@@ -5,14 +5,27 @@
 </head>
 <body>
     <h1>Напиши что-нибудь, и это появится на стриме!</h1>
-    <form action="/send_alert" method="POST" autocomplete="off">
+    <form action="/send_alert" method="POST">
         <input type="text" name="username" placeholder="Твое имя" required>
         <br>
         <textarea name="text" placeholder="Текст сообщения..." required></textarea>
         <br>
-        <button type="submit">Отправить</button>
+        <button type="submit">Отправить</button>https://github.com/Eklif/Alerts/blob/main/templates/send_alert.html
     </form>
     <p>Сообщения можно оправить раз в 10 секунд!</p>
+<script>
+document.getElementById('messageForm').addEventListener('submit', function(e) {
+    // Отправка формы (если не AJAX)
+    
+    // Очищаем форму (чтобы данные не оставались в полях)
+    this.reset();
+    
+    // Убираем POST-данные из истории браузера
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+});
+</script>
 <style>
     body {
         display: grid;
