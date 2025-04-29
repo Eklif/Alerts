@@ -53,7 +53,7 @@ def handle_alert():
         return "Нет текста", 400
 
     current_time=time.time()
-    cooldown=2000 #10 сек межжду соообщениями
+    cooldown=180 #10 сек межжду соообщениями
 
     if current_time-ip_cooldown.get(user_ip,0)<cooldown:
         remaining_time=cooldown-int(current_time-ip_cooldown[user_ip])
