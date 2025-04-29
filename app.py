@@ -43,7 +43,7 @@ def serve_audio(filename):
 def home():
     return render_template('alert_page1.html')
 
-@app.route('/send_alert', methods=['POST'])
+@app.route('/send_alert', methods=['GET'])
 def handle_alert():
     user_ip=request.remote_addr #IP пользователя
     text = request.form.get('text', '')
