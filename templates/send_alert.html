@@ -13,7 +13,7 @@
         <button type="submit">Отправить</button>
     </form>
     <p>Сообщения можно оправить раз в 10 секунд!</p>
-    <script>
+     <script>
         document.getElementById('messageForm').addEventListener('submit', function(e) {
             const submitBtn = document.getElementById('submitBtn');
             
@@ -28,7 +28,7 @@
                 submitBtn.disabled = false;
             }, 10000);
         });
-</script>
+    </script>
 <style>
     body {
         display: grid;
