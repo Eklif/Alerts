@@ -6,29 +6,13 @@
 <body>
     <h1>Напиши что-нибудь, и это появится на стриме!</h1>
     <form action="/send_alert" method="POST">
-        <input type="text" name="username" placeholder="Твое имя" required>
+        <input type="text" name="username" placeholder="Твое имя" form autocomplete="off" required>
         <br>
         <textarea name="text" placeholder="Текст сообщения..." required></textarea>
         <br>
         <button type="submit">Отправить</button>
     </form>
     <p>Сообщения можно оправить раз в 10 секунд!</p>
-     <script>
-        document.getElementById('messageForm').addEventListener('submit', function(e) {
-            const submitBtn = document.getElementById('submitBtn');
-            
-            // Блокируем кнопку на время отправки
-            submitBtn.disabled = true;
-            
-            // Очищаем форму сразу (данные уже ушли)
-            this.reset();
-            
-            // Разблокируем кнопку через 10 секунд (как у вас на сервере)
-            setTimeout(() => {
-                submitBtn.disabled = false;
-            }, 10000);
-        });
-    </script>
 <style>
     body {
         display: grid;
