@@ -13,19 +13,34 @@
         <button type="submit">Отправить</button>https://github.com/Eklif/Alerts/blob/main/templates/send_alert.html
     </form>
     <p>Сообщения можно оправить раз в 10 секунд!</p>
-<script>
-    document.getElementById('messageForm').addEventListener('submit', function(e) {
-    // Отправка формы (если не AJAX)
-    
-    // Очищаем форму (чтобы данные не оставались в полях)
-    this.reset();
-    
-    // Убираем POST-данные из истории браузера
-    if (window.history.replaceState) {
-        window.history.replaceState(null, null, window.location.href);
-    }
-});
-</script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('messageForm');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            form.addEventListener('submit', function(e) {
+                // Блокируем кнопку
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Отправка...';
+                
+                // Очищаем форму после небольшой задержки
+                setTimeout(() => {
+                    form.reset();
+                    
+                    // Убираем POST из истории браузера
+                    if (window.history.replaceState) {
+                        window.history.replaceState(null, null, window.location.href);
+                    }
+                    
+                    // Разблокируем через 10 секунд
+                    setTimeout(() => {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Отправить';
+                    }, 10000);
+                }, 100);
+            });
+        });
+    </script>
 <style>
     body {
         display: grid;
