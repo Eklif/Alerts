@@ -5,14 +5,15 @@
 </head>
 <body>
     <h1>Напиши что-нибудь, и это появится на стриме!</h1>
-    <form action="/send_alert" method="POST">
+    <form id="messageForm" action="/send_alert" method="POST" autocomplete="off">
         <input type="text" name="username" placeholder="Твое имя" required>
         <br>
         <textarea name="text" placeholder="Текст сообщения..." required></textarea>
         <br>
-        <button type="submit">Отправить</button>https://github.com/Eklif/Alerts/blob/main/templates/send_alert.html
+        <button type="submit" id="submitBtn">Отправить</button>
     </form>
-    <p>Сообщения можно оправить раз в 10 секунд!</p>
+    <p>Сообщения можно отправить раз в 10 секунд!</p>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('messageForm');
@@ -41,29 +42,35 @@
             });
         });
     </script>
-<style>
-    body {
-        display: grid;
-        place-items: center;
-        min-height: 50vh;
-        margin: 0;
-        background-color: black; 
-    }
 
-    h1 {
-        font-family: 'Segoe Print';
-        color: red;
-    }
-    p {
-       font-family: 'Segoe Print';
-        color: red;
-    }
-	
-    input[type="text"], textarea {
-        width: 300px;
-        margin: 10px 0;
-        padding: 8px;
-    }
-</style>
+    <style>
+        body {
+            display: grid;
+            place-items: center;
+            min-height: 50vh;
+            margin: 0;
+            background-color: black; 
+        }
+
+        h1 {
+            font-family: 'Segoe Print';
+            color: red;
+        }
+        p {
+            font-family: 'Segoe Print';
+            color: red;
+        }
+        
+        input[type="text"], textarea {
+            width: 300px;
+            margin: 10px 0;
+            padding: 8px;
+        }
+        
+        #submitBtn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+    </style>
 </body>
 </html>
