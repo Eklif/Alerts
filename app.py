@@ -51,7 +51,7 @@ def process_queue():
             'audio_path':client_audio_path
             })
         # Помечаем задачу как выполненную
-        time.sleep(20)
+        time.sleep(56)
         alert_queue.task_done()
         
         
