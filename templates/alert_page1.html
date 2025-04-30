@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="https://raw.githubusercontent.com/Eklif/Alerts/main/CSS/styles.css">
+    <title>Админ-панель</title>
+</head>
+<body>
+    <h1>Админ-панель</h1>
+<body>
+    <div id="alerts"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script>
+        const socket = io("https://alerts-production-e961.up.railway.app", {
+            transports: ['websocket'],  // Принудительно используем WebSocket
+            upgrade: false
+        });
+        const alertsDiv = document.getElementById('alerts');
+        //Путь к изображению 
+        const DEFAULT_IMAGE_URL="https://raw.githubusercontent.com/Eklif/Alerts/main/fulfrina1.jpeg";
+
+        socket.on('new_alert', (data) => {
+            console.log('New alert received:', data); // Добавьте логирование
+            const alertElement = document.createElement('div');
+            alertElement.className = 'alert';
+            
+            //Создаем элемент изображения
+            const imgElement=document.createElement('img');
+            imgElement.className="alert-image";
+            imgElement.src=data.image_url || DEFAULT_IMAGE_URL;
+            imgElement.alt="Alert image";
+            imgElement.onerror = function() {
+                console.error("Image failed to load:", this.src);
+                this.style.display = 'none';
+            };
+
+            // Создаем элемент текста
+            const textElement = document.createElement('div');
+            textElement.textContent= data.text;
+
+            //Добавляем изображение и текст
+            alertElement.appendChild(imgElement);
+            alertElement.appendChild(textElement);
+            alertsDiv.appendChild(alertElement);
+
+            // Автовоспроизведение аудио (если нужно)
+            if (data.audio_path){
+                const audio = new Audio(data.audio_path);
+                audio.play();
+            }
+            // Удаляем уведомление через 5 сек
+            setTimeout(() => {
+                alertElement.remove();
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
