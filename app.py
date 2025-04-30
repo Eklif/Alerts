@@ -52,7 +52,7 @@ def process_queue():
             })
         # Помечаем задачу как выполненную
         alert_queue.task_done()
-        time.sleep(0.1)# Небольшая задержка между сообщениями
+        
         
 # Запускаем обработчик очереди в отдельном потоке
 worker_thread=Thread(target=process_queue, daemon=True)
