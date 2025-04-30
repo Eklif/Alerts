@@ -23,8 +23,9 @@
 
         socket.on('new_alert', (data) => {
             console.log('New alert received:', data); // Добавьте логирование
-            const alertElement = document.createElement('div');
-            alertElement.className = 'alert';
+            const audio = new Audio(data.audio_path);  // Ожидает "/alert_audio/..."
+            audio.play();
+            });
             
             //Создаем элемент изображения
             const imgElement=document.createElement('img');
