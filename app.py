@@ -43,7 +43,7 @@ messages = []
 def process_queue():
     while True:
         # Получаем сообщение из очереди (блокирующий вызов)
-        massge,client_audio_path=alert_queue.get()
+        message,client_audio_path=alert_queue.get()
 
         # Отправляем через WebSocket
         socketio.emit('new_alert', {
