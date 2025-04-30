@@ -57,6 +57,7 @@ def process_queue():
 # Запускаем обработчик очереди в отдельном потоке
 worker_thread=Thread(target=process_queue, daemon=True)
 worker_thread.start()
+alert_queue.join()
 
 @app.route('/alert_audio/<filename>')
 def serve_audio(filename):
