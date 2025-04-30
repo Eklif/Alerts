@@ -97,6 +97,7 @@ def handle_alert():
     # Клиентский путь (такой же, как раньше)
     client_audio_path=f"/alert_audio/{audio_filename}"
     # Добавляем сообщение в очередь
+    time.sleep(1)
     alert_queue.put((message, client_audio_path))
     return "Сообщение добавлено в очередь!"
 
