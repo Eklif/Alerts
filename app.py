@@ -14,6 +14,10 @@ from collections import defaultdict
 import time
 from queue import Queue
 from threading import Thread 
+from pydub import AudioSegment
+from pydub.effects import speedup, pitch_shift
+from pydub.playback import play
+
 
 
 app = Flask(__name__)
@@ -94,9 +98,18 @@ def handle_alert():
     audio_filename=f"alert_{int(time.time())}.mp3"
     audio_path = os.path.join(AUDIO_DIR, audio_filename)
     tts.save(audio_path)
+    # Применяем эффекты к аудио
+    audio=AudioSegment.from_mp3(audio_path)
+    
+     # Примеры эффектов (настройте под свой стиль):
+    audio = pitch_shift(audio, n_semitones=5)  # Высокий мультяшный голос
+    audio = speedup(audio, playback_speed=1.2)  # Ускорение
+    final_audio_path=os.path.join(AUDIO_DIR,f"alert_{int(time.time())}.mp3")
+    # Удаляем временный файл
+    os.remove(audio_path)
     
     # Клиентский путь (такой же, как раньше)
-    client_audio_path=f"/alert_audio/{audio_filename}"
+    client_audio_path=f"/alert_audio/{final_audio_path}"
     # Добавляем сообщение в очередь
     alert_queue.put((message, client_audio_path))
     return "Сообщение добавлено в очередь!"
