@@ -15,10 +15,7 @@ import time
 from queue import Queue
 from threading import Thread 
 from pydub import AudioSegment
-from pydub.effects import speedup, pitch_shift
-from pydub.playback import play
-
-
+from pydub import effects
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET', 'secret!')
