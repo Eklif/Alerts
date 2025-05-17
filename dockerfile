@@ -1,3 +1,4 @@
+RUN which python && python --version
 FROM python:3.10
 
 # Устанавливаем FFmpeg и зависимости
