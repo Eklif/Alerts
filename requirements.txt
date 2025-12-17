@@ -11,3 +11,4 @@ gtts==2.4.0
 pydub==0.25.1
 audio-effects==0.22
 zope.interface==6.0
+zope.event==4.6
